@@ -88,7 +88,49 @@ const contains = search => {
   }
 };
 
-// Command Zone
+const update = name => {
+  const updateName = employeeList.find(
+    employee => employee.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+  );
+  if (updateName === undefined) {
+    render('No Match Found');
+  } else {
+    const field = prompt("Which fied to update, 'office' or 'phone' ?");
+    if (field === 'office') {
+      let value = prompt('What is the update value? ');
+      updateName.officeNum = value;
+    } else if (field === 'phone') {
+      let value = prompt('What is the update value? ');
+      updateName.phoneNum = value;
+    } else {
+      render(`wrong field entered...`);
+    }
+    render(`${updateName.name} ${updateName.officeNum} ${updateName.phoneNum}`);
+  }
+};
+
+const addEmployee = (name1, officeNum1, phoneNum1) => {
+  const addToEmployeeList = {
+    name: name1,
+    officeNum: officeNum1,
+    phoneNum: phoneNum1
+  };
+  employeeList.push(addToEmployeeList);
+};
+
+const deleteEmployee = name => {
+  const result = employeeList.find(
+    employee => employee.name.toLowerCase() === name.toLowerCase()
+  );
+  const removeIndex = employeeList.indexOf(result);
+  if (removeIndex === -1) {
+    render(`Found no match..`);
+  } else {
+    employeeList.splice(removeIndex, 1);
+  }
+};
+
+// Command Prompt
 
 const inputCommand = prompt('Enter Command');
 const commandList = ['print', 'verify', 'lookup', 'contains', 'update', 'add', 'delete'];
@@ -133,15 +175,28 @@ for (let i = 0; i < commandList.length; i++) {
 
   else if (inputCommand === commandList[4]) {
     msg = 'I will Update';
-    
+    const inputUpdate = prompt('Update Employee Information');
+    update(inputUpdate);
+    event.preventDefault();
   }
 
   else if (inputCommand === commandList[5]) {
     msg = 'I will Add';
+
+    const nameToAdd = prompt('Enter the employee name to add: ');
+    const officeToAdd = prompt('Enter the offince number: ');
+    const phoneToAdd = prompt('Enter the phone number to add: ');
+    addEmployee(nameToAdd, officeToAdd, phoneToAdd);
+    print();
+    event.preventDefault();
   }
 
   else if (inputCommand === commandList[6]) {
     msg = 'I will Delete';
+    const nameToDelete = prompt('Delete Employee');
+    deleteEmployee(nameToDelete);
+    print();
+    event.preventDefault();
   }
 
 }
