@@ -42,7 +42,7 @@ const employeeList = [
   }
 ];
 
-//Functions
+//Functions 
 
 const inputCommand = prompt('Enter Command');
 const commandList = ['print', 'verify', 'lookup', 'contains', 'update', 'add', 'delete'];
@@ -69,6 +69,14 @@ for (let i = 0; i < commandList.length; i++) {
 
   else if (inputCommand === commandList[4]) {
     update();
+  }
+
+  else if (inputCommand === commandList[5]) {
+    addEmp();
+  }
+
+  else if (inputCommand === commandList[6]) {
+    deleteEmp();
   }
 
 };
@@ -148,5 +156,32 @@ function update() {
       }
     }
   }
+
+//Add
+
+function addEmp() {
+  const nameAdd = prompt('Enter Employee Name');
+  const officeAdd = prompt('Enter Office Number');
+  const phoneAdd = prompt('Enter Phone Number');
+  var employeeAdd = { name: nameAdd, officeNum: officeAdd, phoneNum: phoneAdd };
+  employeeList.push(employeeAdd);
+  render(`${nameAdd} has been added.`);
+  render(`-------------------------------------------------------`);
+  print();
+}
+  
+//Delete
+
+function deleteEmp() {
+  const nameDelete = prompt('Enter Employee Name').toLowerCase();
+  for (i = 0; i < employeeList.length; i++) {
+    if (nameDelete === employeeList[i].name.toLowerCase()) {
+      employeeList.splice(i, 1);
+    }
+  }
+  render(`${nameQuery} has been successfully removed from employee list!`);
+  render(`-------------------------------------------------------`);
+  print()
+}
 
 
